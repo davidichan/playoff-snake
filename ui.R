@@ -14,7 +14,7 @@ fluidPage(
     # Define the sidebar with one input
     sidebarPanel(
       selectInput("chtype", "Chart type:", 
-                  choices=c("Traditional", "Traditional plus", "Point difference to snake")),
+                  choices=c("ANA", "ARI", "BOS", "BUF", "CAR", "CGY", "CHI", "CBJ", "COL", "DAL", "DET", "EDM", "FLA", "LAK", "MIN", "MTL", "NSH", "NJD", "NYI", "NYR", "OTT", "PHI", "PIT", "SJS", "STL", "TBL", "TOR", "VAN", "WSH", "WPG")),
       hr(),
       helpText("Plots how the Calgary Flames are doing in relation to the pace of a 96 point season.")
     ),
