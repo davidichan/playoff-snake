@@ -45,6 +45,7 @@ function(input, output) {
 
 
 seasons <- c("2017")
+#teams <- c("ANA", "CGY")
 teams <- c("ANA", "ARI", "BOS", "BUF", "CAR", "CGY", "CHI", "CBJ", "COL", "DAL", "DET", "EDM", "FLA", "LAK", "MIN", "MTL", "NSH", "NJD", "NYI", "NYR", "OTT", "PHI", "PIT", "SJS", "STL", "TBL", "TOR", "VAN", "WSH", "WPG")
 post_URL <- paste0("/",seasons,"_games.html")
 season2017_records <- lapply(teams, function(x) readHTMLTable(paste0("http://www.hockey-reference.com/teams/",x,post_URL,""), header=T))
@@ -83,10 +84,17 @@ snake_labs <- list(xlab("Games Played"), ylab("Points"))
 diff_labs <- list(xlab("Games Played"), ylab("Points behind snake"))
 
 output$phonePlot <- renderPlot({ 
-    t_name <- paste0(input$chtype, "2017")
-    print(t_name)
-    trad <- ggplot(data= season2017.records.clean[[t_name]], aes(x=GP, y=Points)) + geom_line(colour="red", size=1) + geom_line(aes(x=GP, y=P2016), colour="purple4", size=0.75) + geom_line(aes(x=GP, y=P2015), colour="forestgreen", size=0.75) + geom_line(aes(x=GP, y=Snake), size=0.75) + snake_labs + snake_lims
-    trad_diff <- ggplot(data= season2017.records.clean[[t_name]], aes(x=GP, y=P17_snake)) + geom_line(colour="red", size=1) + geom_line(aes(x=GP, y=P16_snake), colour="purple4", size=0.75) + geom_line(aes(x=GP, y=P15_snake), colour="forestgreen", size=0.75) + diff_labs + geom_hline(yintercept = 0, size=0.75) + diff_lims
-    grid.arrange(trad, trad_diff, ncol=1)
+    if(input$snakeType == "t"){
+      t_name <- paste0(input$chtype, "2017")
+      print(t_name)
+      trad <- ggplot(data= season2017.records.clean[[t_name]], aes(x=GP, y=Points)) + geom_line(colour="red", size=1) + geom_line(aes(x=GP, y=P2016), colour="purple4", size=0.75) + geom_line(aes(x=GP, y=P2015), colour="forestgreen", size=0.75) + geom_line(aes(x=GP, y=Snake), size=0.75) + snake_labs + snake_lims
+      trad_diff <- ggplot(data= season2017.records.clean[[t_name]], aes(x=GP, y=P17_snake)) + geom_line(colour="red", size=1) + geom_line(aes(x=GP, y=P16_snake), colour="purple4", size=0.75) + geom_line(aes(x=GP, y=P15_snake), colour="forestgreen", size=0.75) + diff_labs + geom_hline(yintercept = 0, size=0.75) + diff_lims
+      grid.arrange(trad, trad_diff, ncol=1)  
+    } else if(input$snakeType == "s"){
+      t_name <- paste0(input$chtype, "2017")
+      smart_snake <- ggplot(data= season2017.records.clean[[t_name]], aes(x=GP, y=Points)) + geom_line(colour="red", size=1) + geom_line(aes(x=GP, y=P2016), colour="purple4", size=0.75) + geom_line(aes(x=GP, y=P2015), colour="forestgreen", size=0.75) + geom_line(aes(x=GP, y=cumsum(SS17)), colour="gray", size=0.75) + geom_line(aes(x=GP, y=Snake), colour="black", size=0.75) + snake_labs + snake_lims
+      smart_diff <- ggplot(data= season2017.records.clean[[t_name]], aes(x=GP, y=deltaSS17)) + geom_line(colour="red", size=1) + diff_labs + geom_hline(yintercept = 0, size=0.75) + diff_lims #+ geom_line(aes(x=GP, y=P16_snake), colour="purple4", size=0.75) + geom_line(aes(x=GP, y=P15_snake), colour="forestgreen", size=0.75) 
+      grid.arrange(smart_snake, smart_diff, ncol=1)
+    }
 })
 }

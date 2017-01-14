@@ -14,9 +14,14 @@ fluidPage(
     # Define the sidebar with one input
     sidebarPanel(
       selectInput("chtype", "Chart type:", 
-                  choices=c("ANA", "ARI", "BOS", "BUF", "CAR", "CGY", "CHI", "CBJ", "COL", "DAL", "DET", "EDM", "FLA", "LAK", "MIN", "MTL", "NSH", "NJD", "NYI", "NYR", "OTT", "PHI", "PIT", "SJS", "STL", "TBL", "TOR", "VAN", "WSH", "WPG")),
+                  choices=c("ANA", "ARI", "BOS", "BUF", "CAR", "CGY", "CHI", "CBJ", "COL", "DAL", "DET", "EDM", "FLA", "LAK", "MIN", "MTL", "NSH", "NJD", "NYI", "NYR", "OTT", "PHI", "PIT", "SJS", "STL", "TBL", "TOR", "VAN", "WSH", "WPG"),
+                  selected = "CGY"),                  
       hr(),
-      helpText("Plots how the Calgary Flames are doing in relation to the pace of a 96 point season.")
+      helpText("Plots how the Calgary Flames are doing in relation to the pace of a 96 point season."),
+      br(),
+      radioButtons("snakeType", "Snake type",
+                   c("Traditional snake"="t", "Smart snake"="s")
+      )
     ),
     
     # Create a spot for the barplot
