@@ -3,6 +3,7 @@ library(RCurl)
 library(XML)
 library(plyr)
 library(gridExtra)
+library(plotly)
 
 rootp <- "data/"
 load(paste0(rootp,"NHL_standings_2016.RData"))
@@ -40,18 +41,18 @@ function(input, output) {
   snake_labs <- list(xlab("Games Played"), ylab("Points"))
   diff_labs <- list(xlab("Games Played"), ylab("Points behind snake"))
   
-  output$phonePlot <- renderPlot({ 
+  output$phonePlot <- renderPlotly({ 
     if(input$snakeType == "t"){
       t_name <- paste0(input$chtype, "2017")
       print(t_name)
       trad <- ggplot(data= season2017.records.clean[[t_name]], aes(x=GP, y=Points)) + geom_line(colour="red", size=1) + geom_line(aes(x=GP, y=P2016), colour="purple4", size=0.75) + geom_line(aes(x=GP, y=P2015), colour="forestgreen", size=0.75) + geom_line(aes(x=GP, y=Snake), size=0.75) + snake_labs + snake_lims
       trad_diff <- ggplot(data= season2017.records.clean[[t_name]], aes(x=GP, y=P17_snake)) + geom_line(colour="red", size=1) + geom_line(aes(x=GP, y=P16_snake), colour="purple4", size=0.75) + geom_line(aes(x=GP, y=P15_snake), colour="forestgreen", size=0.75) + diff_labs + geom_hline(yintercept = 0, size=0.75) + diff_lims
-      grid.arrange(trad, trad_diff, ncol=1)  
+      subplot(trad, trad_diff, nrows = 2, shareX = T, titleX = T, titleY = T)
     } else if(input$snakeType == "s"){
       t_name <- paste0(input$chtype, "2017")
       smart_snake <- ggplot(data= season2017.records.clean[[t_name]], aes(x=GP, y=Points)) + geom_line(colour="red", size=1) + geom_line(aes(x=GP, y=P2016), colour="purple4", size=0.75) + geom_line(aes(x=GP, y=P2015), colour="forestgreen", size=0.75) + geom_line(aes(x=GP, y=cumsum(SS17)), colour="gray", size=0.75) + geom_line(aes(x=GP, y=Snake), colour="black", size=0.75) + snake_labs + snake_lims
       smart_diff <- ggplot(data= season2017.records.clean[[t_name]], aes(x=GP, y=deltaSS17)) + geom_line(colour="red", size=1) + diff_labs + geom_hline(yintercept = 0, size=0.75) + diff_lims #+ geom_line(aes(x=GP, y=P16_snake), colour="purple4", size=0.75) + geom_line(aes(x=GP, y=P15_snake), colour="forestgreen", size=0.75) 
-      grid.arrange(smart_snake, smart_diff, ncol=1)
+      subplot(smart_snake, smart_diff, nrows = 2, shareX = T, titleX = T, titleY = T)
     }
   })
 }
