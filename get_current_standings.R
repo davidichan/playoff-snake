@@ -56,7 +56,8 @@ clean_results <- function(results.ls){
     season2017.records.clean[[i]]$SS17 <- season2017.records.clean[[i]]$Pts_ssnake16/(-27) + 4.726
     #Using this method, the Flames faced disproportionately poor opposition and sum of snake points would
     #have been >96 points. Therefore, sum up the points, divide and readjust each point total to sum to 96. 
-    season2017.records.clean[[i]]$SS17 <- season2017.records.clean[[i]]$SS17 / 110.2727 * 96
+    int_total <- cumsum(season2017.records.clean[[i]]$SS17)[82]
+    season2017.records.clean[[i]]$SS17 <- season2017.records.clean[[i]]$SS17 / int_total * 96
     season2017.records.clean[[i]]$deltaSS17 <- season2017.records.clean[[i]]$Points - cumsum(season2017.records.clean[[i]]$SS17)
   }
   
