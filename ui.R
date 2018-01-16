@@ -4,26 +4,35 @@ library(plotly)
 fluidPage(    
   
   # Give the page a title
-  titlePanel("NHL Playoff Snake"),
+  titlePanel("NHL Playoff Snake - 2017-18"),
   
   # Generate a row with a sidebar
-  sidebarLayout(      
+  fluidRow(
+    column(4, 
     
     # Define the sidebar with one input
-    sidebarPanel(
+    wellPanel(
       selectInput("chtype", "Chart type:", 
                   choices=c("ANA", "ARI", "BOS", "BUF", "CAR", "CBJ", "CGY", "CHI", "COL", "DAL", "DET", "EDM", "FLA", "LAK", "MIN", "MTL", "NSH", "NJD", "NYI", "NYR", "OTT", "PHI", "PIT", "SJS", "STL", "TBL", "TOR", "VAN", "WSH", "WPG"),
-                  selected = "CGY"),                  
-      hr(),
-      helpText("Plots how each team is doing in relation to the pace of a 96 point season."),
-      br(),
-      radioButtons("snakeType", "Snake type",
-                   c("Traditional snake"="t", "Smart snake"="s")
-      )
-    ),
+                  selected = "CGY"),            
+      helpText("Plots how each team is doing in relation to the pace of a 96 point season as a proxy for whether a team is on track to make the playoffs. While 96 points do not guarantee a playoff birth, at least in the Western Conference, no team has missed the playoffs when they reached that point total.")
+      ),
+    fluidRow(
+      headerPanel("Standings"),
+    column(12,
+      helpText("Based on points difference to the snake")),
+    column(6,
+      "Eastern Conference Standings",
+      wellPanel( 
+      tableOutput('EAStable'))),
+    column(6,
+      "Western Conference Standings",
+      wellPanel(
+      tableOutput('WEStable')))
+    )),
     
     # Create a spot for the barplot
-    mainPanel(
+    column(8,
       plotlyOutput("SnakePlot"),
       helpText("Thank you to the ", a("Calgary Puck Forum", href="http://forum.calgarypuck.com/showthread.php?t=157390"), " for the idea for the Playoff Snake.")
       #textOutput("phonePlot")  
