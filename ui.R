@@ -12,15 +12,28 @@ fluidPage(
     
     # Define the sidebar with one input
     wellPanel(
-      selectInput("chtype", "Chart type:", 
+      selectInput("chtype", "Team selection:", 
                   choices=c("ANA", "ARI", "BOS", "BUF", "CAR", "CBJ", "CGY", "CHI", "COL", "DAL", "DET", "EDM", "FLA", "LAK", "MIN", "MTL", "NSH", "NJD", "NYI", "NYR", "OTT", "PHI", "PIT", "SJS", "STL", "TBL", "TOR", "VAN", "WSH", "WPG"),
                   selected = "CGY"),            
-      helpText("Plots how each team is doing in relation to the pace of a 96 point season as a proxy for whether a team is on track to make the playoffs. While 96 points do not guarantee a playoff birth, at least in the Western Conference, no team has missed the playoffs when they reached that point total.")
+      helpText("Plots how each team is doing in relation to the pace of a 96 point season as a proxy for whether a team is on track to make the playoffs. While 96 points do not guarantee a playoff birth, at least in the Western Conference, no team has missed the playoffs when they reached that point total."),
+      checkboxInput("comp", "Compare teams "),
+      conditionalPanel(
+        condition = "input.comp == true",
+        selectInput("compteam", "Team to compare:", 
+                    choices=c("ANA", "ARI", "BOS", "BUF", "CAR", "CBJ", "CGY", "CHI", "COL", "DAL", "DET", "EDM", "FLA", "LAK", "MIN", "MTL", "NSH", "NJD", "NYI", "NYR", "OTT", "PHI", "PIT", "SJS", "STL", "TBL", "TOR", "VAN", "WSH", "WPG"),
+                    selected = "ANA")       
+      )
       ),
+    
+    column(8,
+    sliderInput("pace", "Choose points pace:",
+                min = 90, max = 100,
+                value = 96)),
+
     fluidRow(
       headerPanel("Standings"),
     column(12,
-      helpText("Based on points difference to the snake")),
+      helpText("Based on points difference to the 96 Point snake")),
     column(6,
       "Eastern Conference Standings",
       wellPanel( 
