@@ -4,7 +4,7 @@ library(plotly)
 fluidPage(    
   
   # Give the page a title
-  titlePanel("NHL Playoff Snake - 2017-18"),
+  titlePanel("NHL Playoff Snake - 2018-19"),
   
   # Generate a row with a sidebar
   fluidRow(
@@ -13,14 +13,14 @@ fluidPage(
     # Define the sidebar with one input
     wellPanel(
       selectInput("chtype", "Team selection:", 
-                  choices=c("ANA", "ARI", "BOS", "BUF", "CAR", "CBJ", "CGY", "CHI", "COL", "DAL", "DET", "EDM", "FLA", "LAK", "MIN", "MTL", "NSH", "NJD", "NYI", "NYR", "OTT", "PHI", "PIT", "SJS", "STL", "TBL", "TOR", "VAN", "WSH", "WPG"),
+                  choices=c("ANA", "ARI", "BOS", "BUF", "CAR", "CBJ", "CGY", "CHI", "COL", "DAL", "DET", "EDM", "FLA", "LAK", "MIN", "MTL", "NSH", "NJD", "NYI", "NYR", "OTT", "PHI", "PIT", "SJS", "STL", "TBL", "TOR", "VAN", "VEG", "WSH", "WPG"),
                   selected = "CGY"),            
       helpText("Plots how each team is doing in relation to the pace of a 96 point season as a proxy for whether a team is on track to make the playoffs. While 96 points do not guarantee a playoff birth, at least in the Western Conference, no team has missed the playoffs when they reached that point total."),
       checkboxInput("comp", "Compare teams "),
       conditionalPanel(
         condition = "input.comp == true",
         selectInput("compteam", "Team to compare:", 
-                    choices=c("ANA", "ARI", "BOS", "BUF", "CAR", "CBJ", "CGY", "CHI", "COL", "DAL", "DET", "EDM", "FLA", "LAK", "MIN", "MTL", "NSH", "NJD", "NYI", "NYR", "OTT", "PHI", "PIT", "SJS", "STL", "TBL", "TOR", "VAN", "WSH", "WPG"),
+                    choices=c("ANA", "ARI", "BOS", "BUF", "CAR", "CBJ", "CGY", "CHI", "COL", "DAL", "DET", "EDM", "FLA", "LAK", "MIN", "MTL", "NSH", "NJD", "NYI", "NYR", "OTT", "PHI", "PIT", "SJS", "STL", "TBL", "TOR", "VAN","VEG", "WSH", "WPG"),
                     selected = "ANA")       
       )
       ),
